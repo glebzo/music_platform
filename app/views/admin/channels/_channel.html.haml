@@ -1,0 +1,10 @@
+%tr
+  %td
+    = link_to channel.name, admin_channel_path(channel)
+  %td
+    = link_to channel.albums_count
+  %td
+    = link_to channel.soundtracks_count
+
+  %td
+    %a.btn.btn-default{href: edit_admin_channel_path(channel)} Edit Channel

@@ -1,0 +1,33 @@
+%aside#nav.hidden-xs.bg-black.dk.aside.hidden-print.nav-xs
+  %section.vbox
+    -# Left Menu Header
+    %section.w-f-md.scrollable.hover
+      %nav.nav-primary.bg.hidden-xs
+        %ul.nav
+          %li.hidden-nav-xs.padder.m-t.m-b-sm.text-xs.text-muted Digital Radio #1
+          -#
+          %li.active
+            %a.auto.font-bold{:href => ""}
+              %i.icon.icon-grid.text-success-lter
+              %span Discover Music
+          %li
+            %a.auto.font-bold{:href => ''}
+              %i.icon.icon-music-tone-alt.text-info-lter
+              %span Genres
+          %li
+            %a.auto.font-bold{href:''}
+              %i.fa.fa-star-o.text-info-heart{style: 'font-size: 20px;'}
+              %span Favorites
+          %li
+            %a.auto.font-bold{:href => ''}
+              %i.icon.icon-like.text-success-lt
+              %span Likes
+
+          %li.m-b.hidden-nav-xs
+    -# Left Menu Footer
+    %footer.footer.no-padder.text-center-nav-xs
+      .bg
+        .dropdown.dropup.wrapper-sm.clearfix
+          %a.btn.btn-block.m-t-xs.m-b-xxs{:href => ""}
+            %i.icon-user-follow
+            %span.hidden-nav-xs.m-l Login

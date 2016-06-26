@@ -1,0 +1,37 @@
+%header.header.header-md.navbar.navbar-fixed-top-xs
+  .navbar-header.aside.bg-black.nav-xs
+    -# Mobile Menu Icon
+    %a.btn.btn-link.visible-xs{"data-target" => "#nav,html", "data-toggle" => "class:nav-off-screen,open"}
+      %i.icon-list
+    -# Logo
+    %a.navbar-brand.text-lt{:href => root_path, :title => "Responsive Music Platform"}
+      -# Logo Icon
+      %i.icon-earphones
+      -# Logo Text
+      %span.hidden-nav-xs.m-l-sm MusicPlatform
+    -# User Account Icon
+    %a.btn.btn-link.visible-xs{"data-target" => "#menu", "data-toggle" => "collapse"}
+      %i.icon-user
+
+  #menu.collapse.navbar-collapse.bg-white
+    -# Reveal Full Menu
+    %ul.nav.navbar-nav.hidden-xs
+      %li
+        %a.text-muted{"data-toggle" => "class:nav-xs,nav-xs", :href => "#nav,.navbar-header"}
+          %i.icon.icon-list
+    -# Live Search
+    %form.navbar-form.navbar-left.m-t.m-l-n-xs{:action => "", :method => "get"}
+      .form-group.dropdown
+        .input-group
+          %span.input-group-btn
+            %button.btn.btn-sm.bg-white.btn-icon.rounded{:type => "submit"}
+              %i.fa.fa-search
+          %input.form-control.input-sm.no-border.rounded{:autocomplete => "off", :placeholder => "Search...", :type => "text", :value => ""}/
+
+    .navbar-right
+      %ul.nav.navbar-nav
+        %li
+          %a.dropdown-toggle.lt{:href => account_button_path}
+            -#edit_listener_registration
+            %i.icon-user
+            = account_button

@@ -1,0 +1,36 @@
+%script{type: 'text/template', id: 'channel-item-view'}
+  .col-xs-6.col-sm-4.col-md-3.col-lg-2
+    .item
+      .pos-rlt
+        .item-overlay.opacity.r.bg-black
+          .center.text-center.m-t-n
+            %a.play-me
+              %i#is_playing.icon-control-play.i-2x
+        .item-overlay.bottom
+          .bottom.m-l-sm.m-b-sm.m-r-sm
+            %a.btn
+              // Favorite Icon
+              // fa-star
+              %i.fa.fa-star-o.text-info-heart{style: 'font-size: 20px;'}
+        :plain
+          <a href="channel_url" title ="<%- name %>">
+            <img class="r img-full"
+              src = "<%=img256%>"
+              height = "150"
+              width = "150"
+              sizes = "(max-width: 150px) 100vw, 150px"
+              :srcset = "<%- img150 %> 150w, <%=img256%> 256w"
+            >
+            </img>
+          </a>
+
+      .m-t-sm.m-b-lg
+        .item-desc
+          // Channel Link
+          %a.text-ellipsis{:href => "", :title => '' }
+            <%- name %>
+          .text-muted.text-xs.text-ellipsis
+            Tune in
+            // SoundTrack Name
+            %a{:href => "", :rel => "tag"}
+              <%- currentTrack %>

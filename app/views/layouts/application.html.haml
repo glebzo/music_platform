@@ -1,0 +1,38 @@
+!!!
+%html.app{:lang => "en-US"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title MusicPlatform
+
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application'
+
+
+%body#app
+  %section.vbox
+    = render partial: 'header'
+    %section
+      %section.hbox.stretch
+        = render partial: 'menu'
+        %section#content
+          %a.hide.nav-off-screen-block{"data-target" => "#nav,html",
+          "data-toggle" => "class:nav-off-screen,open",
+          :href => "javascript:;"}
+          %section.vbox
+            %section.w-f-md
+              %section.hbox.stretch
+                // aside block
+                %section
+                  %section.vbox
+                    %section.scrollable.wrapper-lg
+                      = render 'login_register_block'
+                      = yield
+
+            = render partial: 'player'
+
+
+
+= javascript_include_tag 'application'
+
+= render :template => 'templates/channels/composite_view'
+= render :template => 'templates/channels/item_view'

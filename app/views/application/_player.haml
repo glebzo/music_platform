@@ -1,0 +1,69 @@
+%footer.footer.nav-bar-fixed-bottom.bg-white
+  #jp_container
+    .jp-type-playlist
+      #jplayer.jp-jplayer.hide
+      .jp-gui
+        .jp-video-play.hide
+          %a.jp-video-play-icon play
+        .jp-interface
+          .jp-controls
+            %div
+              %a.jp-previous
+                %i.icon-control-rewind.i-lg
+            %div
+              %a.jp-play
+                %i.icon-control-play.i-2x
+              %a.jp-pause.hid
+                %i.icon-control-pause.i-2x
+            %div
+              %a.jp-next
+                %i.icon-control-forward.i-lg
+            .hide
+              %a.jp-stop
+                %i.fa.fa-stop
+            %div
+              %a{"data-target" => "#playlist", "data-toggle" => "dropdown"}
+                %i.icon-list
+            %div
+              %a
+                %i.icon-like
+            %div
+              %a
+                %i.icon-dislike
+
+            .jp-progress.hidden-xs
+              .jp-seek-bar.lt
+                .jp-play-bar.dk
+              .jp-title.text-lt
+            .hidden-xs.hidden-sm.jp-current-time.text-xs.text-muted
+            .hidden-xs.hidden-sm.jp-duration.text-xs.text-muted
+            .hidden-xs.hidden-sm
+              %a.jp-mute{:title => "mute"}
+                %i.icon-volume-2
+              %a.jp-unmute.hid{:title => "unmute"}
+                %i.icon-volume-off
+            .hidden-xs.hidden-sm.jp-volume
+              .jp-volume-bar
+                .jp-volume-bar-value.lter
+            %div
+              %a.jp-shuffle{:title => "shuffle"}
+                %i.icon-shuffle.text-muted
+              %a.jp-shuffle-off.hid{:title => "shuffle off"}
+                %i.icon-shuffle.text-lt
+            %div
+              %a.jp-repeat{:title => "repeat"}
+                %i.icon-loop.text-muted
+              %a.jp-repeat-off.hid{:title => "repeat off"}
+                %i.icon-loop.text-lt
+            .hide
+              %a.jp-full-screen{:title => "full screen"}
+                %i.fa.fa-expand
+              %a.jp-restore-screen{:title => "restore screen"}
+                %i.fa.fa-compress.text-lt
+      #playlist.jp-playlist.dropup
+        %ul.dropdown-menu.aside-xl.dker
+          / The method Playlist.displayPlaylist() uses this unordered list
+          %li.list-group-item
+      .jp-no-solution.hide
+        %span Update Required
+        To play the media you will need to either update your browser to a recent version or update your Flash plugin.

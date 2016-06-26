@@ -1,0 +1,49 @@
+!!!
+%html.app{:lang => "en-US"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8",
+    "http-equiv" => "Content-Type"}
+    %title MusicPlatform
+
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application'
+
+  %body#app
+    %section.vbox
+      = notice
+      %br
+      = alert
+      -#= render partial: 'header'
+      %section
+        %section.hbox.stretch
+          -#= render partial: 'menu'
+          %section#content
+            %a.hide.nav-off-screen-block{"data-target" => "#nav,html",
+            "data-toggle" => "class:nav-off-screen,open",
+            :href => "javascript:;"}
+            %section.vbox
+              %section.w-f-md
+                %section.hbox.stretch
+                  %section
+                    %section.vbox
+                      %section.scrollable.wrapper-lg
+                        .div
+                          %section.vbox
+                            %h2.font-thin.m-b.m-t-none Our Music Channels
+                            .row.row-sm
+                              #channels-container
+
+  -#= render partial: 'promo_block'
+  -#= render partial: 'block2'
+  -#.row
+  -#  = render partial: 'top_board'
+  -#  = render partial: 'popular_artists'
+  -#  = render partial: 'new_tracks'
+  -#.row
+  -#  .col-md-6
+  -#  .col-md-6
+  -#= render partial: 'player'
+
+
+
+  = render :template => 'templates/channels/item_view'
