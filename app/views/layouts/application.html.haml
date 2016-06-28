@@ -7,7 +7,6 @@
     = csrf_meta_tags
     = stylesheet_link_tag 'application'
 
-
 %body#app
   %section.vbox
     = render partial: 'header'
@@ -18,7 +17,8 @@
           %a.hide.nav-off-screen-block{"data-target" => "#nav,html",
           "data-toggle" => "class:nav-off-screen,open",
           :href => "javascript:;"}
-          %section.vbox
+
+          %section.vbox{"data-turbolinks-permanent" => ""}
             %section.w-f-md
               %section.hbox.stretch
                 // aside block
@@ -31,8 +31,8 @@
             = render partial: 'player'
 
 
-
-= javascript_include_tag 'application'
+#scripts{"data-turbolinks-permanent" => ""}
+  = javascript_include_tag 'application'
 
 = render :template => 'templates/channels/composite_view'
 = render :template => 'templates/channels/item_view'

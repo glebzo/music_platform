@@ -32,5 +32,10 @@ RSpec.configure do |config|
     end
   end
 
+  config.include FactoryGirl::Syntax::Methods
+
+  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::TestHelpers, type: :view
+
 end
 

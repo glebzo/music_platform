@@ -6,7 +6,7 @@ RSpec.describe ChannelsController, type: :controller do
   describe '#index' do
 
     it 'renders first page of channels list with json' do
-      channels = [{ :name => 'Ambient' }, { :name => 'House' }]
+      channels = Array.new 2, build(:channel)
       allow(Channel).to receive(:page).with("1").and_return(channels)
 
       get :index, :page => 1
@@ -18,8 +18,8 @@ RSpec.describe ChannelsController, type: :controller do
   end
 
   describe '#show' do
-    it 'renders a sigle channel with json' do
-      channel = {:name => "Ambient"}
+    it 'renders a single channel with json' do
+      channel = build(:channel)
       allow(Channel).to receive(:find).with("1").and_return(channel)
 
       get :show, :id => 1

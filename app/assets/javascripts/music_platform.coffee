@@ -11,15 +11,10 @@ MusicPlatform.on 'before:start', ->
   # // $('#jplayer').bind $.jPlayer.event.play, (event) ->
   # //   console.log 'playing'
 
-  MusicPlatform.Router = Marionette.AppRouter.extend(
-    appRoutes: {
-      "about" : "showAbout"
-    }
-  )
 
   # Initialize Layout and Regions
   RegionContainer = Marionette.LayoutView.extend(
-    el: 'body'
+    el: '#app'
 
     regions:
       channels_composite: '#channels_composite'

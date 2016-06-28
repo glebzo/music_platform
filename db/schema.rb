@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160626111543) do
+ActiveRecord::Schema.define(version: 20160626103126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,16 +37,6 @@ ActiveRecord::Schema.define(version: 20160626111543) do
 
   add_index "artists", ["artistable_type", "artistable_id"], name: "index_artists_on_artistable_type_and_artistable_id", using: :btree
 
-  create_table "channel_track_relationships", force: :cascade do |t|
-    t.integer  "soundtrack_id"
-    t.integer  "channel_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "channel_track_relationships", ["channel_id"], name: "index_channel_track_relationships_on_channel_id", using: :btree
-  add_index "channel_track_relationships", ["soundtrack_id"], name: "index_channel_track_relationships_on_soundtrack_id", using: :btree
-
   create_table "channels", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -57,18 +47,19 @@ ActiveRecord::Schema.define(version: 20160626111543) do
   end
 
   create_table "listeners", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
+    t.boolean  "is_admin",               default: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "listeners", ["email"], name: "index_listeners_on_email", unique: true, using: :btree

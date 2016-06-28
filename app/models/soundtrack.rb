@@ -6,6 +6,4 @@ class Soundtrack < ActiveRecord::Base
   belongs_to :soundtrackable, polymorphic: true, counter_cache: true
 
   belongs_to :channel
-  # has_many :channels, class_name: 'Soundtrack', as: :soundtrackable
-
 end

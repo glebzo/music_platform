@@ -49,7 +49,7 @@
       lastChannelModel = channelModel
       # Turn on current channel
       lastChannelModel.set('is_playing', true)
-      Playlist.playlist = [{mp3: '123'}]
+
       Playlist.play()
     pause: ->
       Playlist.pause()

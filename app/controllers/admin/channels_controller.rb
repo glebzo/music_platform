@@ -1,6 +1,6 @@
 class Admin::ChannelsController < ApplicationController
-  before_action :authenticate_listener!
-  # before_action :check_is_admin?
+  # before_action :authenticate_listener!
+  # before_action :authorize_admin!
 
   def index
     @channels = Channel.all
@@ -12,11 +12,9 @@ class Admin::ChannelsController < ApplicationController
 
   private
 
-  def check_is_admin?
-    if current_listener.is_admin?
-      true
-    else
-      false
+  def authorize_admin!
+    unless current_listener.is_admin?
+      redirect_to root_path
     end
   end
 
