@@ -1,7 +1,7 @@
-# MusicPlatform
+# MusicPlatform [Under Development]
 Rails-based Music Streaming Platform | https://music-platform.herokuapp.com
 
-**MusicPlatform** is an open solution to run your own music streaming.
+**MusicPlatform** is a flexible solution to run your own music streaming.
 
 ###Key Features
 
