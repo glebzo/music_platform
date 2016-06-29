@@ -2,4 +2,5 @@
   %a{:href => admin_channels_path}
     = controller_name.capitalize
   \/
-  =@channel.name
+  = @channel.name
+  %a.btn.btn-info{:href => edit_admin_channel_path(@channel)} Edit

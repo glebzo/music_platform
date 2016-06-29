@@ -1,2 +1,10 @@
-%h1 Admin::Channels#edit
-%p Find me in app/views/admin/channels/edit.html.haml
+%h1
+  =render 'admin/breadcrumb'
+
+= simple_form_for @channel, url: admin_channel_path, method: 'PATCH' do |f|
+  = f.error_notification
+
+  = f.input :name
+  = f.input :description
+  = f.input :image, as: :file
+  = f.submit 'Update'

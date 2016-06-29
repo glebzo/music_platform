@@ -22,6 +22,11 @@
             %a.auto.font-bold{:href => ''}
               %i.icon.icon-like.text-success-lt
               %span Likes
+          -if current_listener.present? and current_listener.is_admin?
+            %li
+              %a.auto.font-bold{:href => admin_channels_path}
+                %i.icon.icon-plus
+                %span Admin Board
 
           %li.m-b.hidden-nav-xs
     -# Left Menu Footer

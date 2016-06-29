@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/' => 'channels#index'
-    resources :channels, only: [:index, :show, :edit] do
+    resources :channels, only: [:index, :show, :edit, :update] do
       resources :soundtracks, only: [:index, :new, :create]
     end
   end
