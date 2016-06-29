@@ -2,10 +2,11 @@
 # JPlayer & jPlayerPlaylist
 
 @MusicPlatformPlayer = do ->
-  $('#jplayer').bind $.jPlayer.event.play, (event) ->
-  # console.log event
-  # console.log event.jPlayer.status.currentTime
+  #    $('#jplayer').bind $.jPlayer.event.play, (event) ->
+  #     console.log event
+  #     console.log event.jPlayer.status.currentTime
 
+  # SETTINGS #
   storage = $.localStorage
   jPlayer =  $('#jplayer')
 
@@ -55,9 +56,11 @@
       Playlist.pause()
       lastChannelModel.set('is_playing', false)
 
+
+  console.log('MusicPlatformPlayer Ready')
+
   {
     ## API ##
-
     play: (channelModel) ->
       PlayerController.setChannel(channelModel)
     pause: ->

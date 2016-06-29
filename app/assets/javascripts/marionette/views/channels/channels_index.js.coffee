@@ -1,3 +1,4 @@
+
 class MusicPlatform.Views.Channels extends Marionette.CompositeView
   template: '#channels-composite-view'
 

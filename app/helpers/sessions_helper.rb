@@ -7,11 +7,11 @@ module SessionsHelper
     end
   end
 
-  def account_button
+  def account_button_text
     if listener_signed_in?
       'Logout'
     else
-      "Login"
+      'Login'
     end
   end
 end

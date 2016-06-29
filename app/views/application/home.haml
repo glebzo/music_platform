@@ -1,1 +1,9 @@
 .div#channels_composite
+
+-# On home page we need to fetch and render collection
+-# of channels
+:javascript
+  if (typeof MusicPlatform != "undefined") {
+    MusicPlatform.ReloadRegionContainer()
+    MusicPlatform.fetchAndRenderChannels()
+  }

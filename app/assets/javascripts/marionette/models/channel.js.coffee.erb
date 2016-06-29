@@ -6,8 +6,8 @@ class MusicPlatform.Models.Channel extends Backbone.Model
     currentTrack: 'Soundtrack'
     is_playing: false
     playlist: []
-    currentPage: ''
-    totalPages: ''
+    currentPage: -1
+    totalPages: -1
     img150: "<%= image_url 'channels/defaults/img150.jpg' %>"
     img256: "<%= image_url 'channels/defaults/img256.jpg' %>"
 
@@ -24,10 +24,3 @@ class MusicPlatform.Models.Channel extends Backbone.Model
   PlayChannel: ->
     MusicPlatformPlayer.play(this)
     this.set 'is_playing', true
-
-
-#    console.log 'Start Playing Channel: ' + this.attributes.name
-#    console.log 'Local Model ID: ' + this.attributes.id
-#    console.log 'Channel ID: ' + this.attributes.id
-#    console.log 'Channel local page: ' +
-#    console.log 'Loaded channel playlist:' + this.attributes.playlist

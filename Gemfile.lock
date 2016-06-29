@@ -154,6 +154,9 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
     pg (0.18.4)
+    pjax_rails (0.4.0)
+      jquery-rails
+      railties (>= 3.2, < 5.0)
     pkg-config (1.1.7)
     puma (2.16.0)
     rack (1.6.4)
@@ -233,8 +236,6 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
-    turbolinks (2.5.3)
-      coffee-rails
     twitter-bootstrap-rails (3.2.2)
       actionpack (>= 3.1)
       execjs (>= 2.2.2, >= 2.2)
@@ -267,6 +268,7 @@ DEPENDENCIES
   kaminari
   paperclip (~> 5.0.0.beta1)
   pg (~> 0.15)
+  pjax_rails (~> 0.4.0)
   puma (~> 2.15)
   rails (= 4.2.6)
   rspec-rails
@@ -276,7 +278,6 @@ DEPENDENCIES
   simple_form
   spring
   teaspoon-jasmine
-  turbolinks
   twitter-bootstrap-rails
 
 RUBY VERSION

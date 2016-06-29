@@ -1,0 +1,920 @@
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36m (128.3ms)[0m  [1mDROP DATABASE IF EXISTS "music_platform_test"[0m
+  [1m[35m (329.0ms)[0m  CREATE DATABASE "music_platform_test" ENCODING = 'unicode'
+  [1m[36mSQL (2.3ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (14.5ms)[0m  CREATE TABLE "albums" ("id" serial primary key, "name" character varying, "description" text, "albumable_id" integer, "albumable_type" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (2.2ms)[0m  [1mCREATE  INDEX  "index_albums_on_albumable_type_and_albumable_id" ON "albums" USING btree ("albumable_type", "albumable_id")[0m
+  [1m[35m (4.3ms)[0m  CREATE TABLE "artists" ("id" serial primary key, "name" character varying, "artistable_id" integer, "artistable_type" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (1.1ms)[0m  [1mCREATE  INDEX  "index_artists_on_artistable_type_and_artistable_id" ON "artists" USING btree ("artistable_type", "artistable_id")[0m
+  [1m[35m (3.5ms)[0m  CREATE TABLE "channel_track_relationships" ("id" serial primary key, "soundtrack_id" integer, "channel_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (1.0ms)[0m  [1mCREATE  INDEX  "index_channel_track_relationships_on_channel_id" ON "channel_track_relationships" USING btree ("channel_id")[0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_channel_track_relationships_on_soundtrack_id" ON "channel_track_relationships" USING btree ("soundtrack_id")
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "channels" ("id" serial primary key, "name" character varying, "description" text, "soundtracks_count" integer DEFAULT 0, "albums_count" integer DEFAULT 0, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35m (5.2ms)[0m  CREATE TABLE "listeners" ("id" serial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" timestamp, "last_sign_in_at" timestamp, "current_sign_in_ip" inet, "last_sign_in_ip" inet, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (1.2ms)[0m  [1mCREATE UNIQUE INDEX  "index_listeners_on_email" ON "listeners" USING btree ("email")[0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX  "index_listeners_on_reset_password_token" ON "listeners" USING btree ("reset_password_token")
+  [1m[36m (4.5ms)[0m  [1mCREATE TABLE "soundtracks" ("id" serial primary key, "name" character varying, "soundtrackable_id" integer, "soundtrackable_type" character varying, "channel_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "soundtrack_file_name" character varying, "soundtrack_content_type" character varying, "soundtrack_file_size" integer, "soundtrack_updated_at" timestamp) [0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_soundtracks_on_channel_id" ON "soundtracks" USING btree ("channel_id")
+  [1m[36m (1.0ms)[0m  [1mCREATE  INDEX  "index_soundtracks_on_soundtrackable_type_and_soundtrackable_id" ON "soundtracks" USING btree ("soundtrackable_type", "soundtrackable_id")[0m
+  [1m[35m (3.4ms)[0m  CREATE TABLE "votes" ("id" serial primary key, "soundtrack_id" integer, "listener_id" integer, "score" integer DEFAULT 0, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (0.9ms)[0m  [1mCREATE  INDEX  "index_votes_on_listener_id" ON "votes" USING btree ("listener_id")[0m
+  [1m[35m (0.8ms)[0m  CREATE  INDEX  "index_votes_on_soundtrack_id" ON "votes" USING btree ("soundtrack_id")
+  [1m[36m (2.3ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36m (0.3ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160626111543')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160609145458')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160609145826')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160609145925')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160609152102')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160623140631')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160626072753')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160626103126')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.4ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by ChannelsController#index as HTML
+  Parameters: {"page"=>"1"}
+Completed 200 OK in 31ms (Views: 27.3ms | ActiveRecord: 3.2ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by ChannelsController#index as HTML
+  Parameters: {"page"=>"1"}
+Completed 200 OK in 31ms (Views: 27.3ms | ActiveRecord: 3.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by ChannelsController#index as HTML
+  Parameters: {"page"=>"1"}
+Completed 200 OK in 31ms (Views: 26.8ms | ActiveRecord: 3.5ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by ChannelsController#index as HTML
+  Parameters: {"page"=>"1"}
+Completed 200 OK in 31ms (Views: 26.7ms | ActiveRecord: 3.4ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+Completed 401 Unauthorized in 12ms (ActiveRecord: 0.0ms)
+  Rendered text template (0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+Completed 401 Unauthorized in 11ms (ActiveRecord: 0.0ms)
+  Rendered text template (0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+Completed 401 Unauthorized in 11ms (ActiveRecord: 0.0ms)
+  Rendered text template (0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+Completed 401 Unauthorized in 11ms (ActiveRecord: 0.0ms)
+  Rendered text template (0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+Completed 401 Unauthorized in 11ms (ActiveRecord: 0.0ms)
+  Rendered text template (0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+Completed 401 Unauthorized in 11ms (ActiveRecord: 0.0ms)
+  Rendered text template (0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+Completed 401 Unauthorized in 11ms (ActiveRecord: 0.0ms)
+  Rendered text template (0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[35m (1.7ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.2ms)
+Completed 200 OK in 31ms (Views: 30.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.3ms)
+Completed 200 OK in 31ms (Views: 30.5ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.2ms)
+Completed 200 OK in 31ms (Views: 30.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.2ms)
+Completed 200 OK in 30ms (Views: 29.9ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.2ms)
+Completed 200 OK in 31ms (Views: 30.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.2ms)
+Completed 200 OK in 31ms (Views: 30.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.3ms)
+Completed 200 OK in 31ms (Views: 30.8ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.2ms)
+Completed 200 OK in 31ms (Views: 30.3ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.2ms)
+Completed 200 OK in 31ms (Views: 30.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+Completed 401 Unauthorized in 11ms (ActiveRecord: 0.0ms)
+  Rendered text template (0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.2ms)
+Completed 200 OK in 31ms (Views: 30.9ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by ChannelsController#index as HTML
+  Parameters: {"page"=>"1"}
+Completed 200 OK in 31ms (Views: 26.8ms | ActiveRecord: 3.4ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by ChannelsController#index as HTML
+  Parameters: {"page"=>"1"}
+Completed 200 OK in 31ms (Views: 26.7ms | ActiveRecord: 3.6ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.2ms)
+Completed 200 OK in 31ms (Views: 30.5ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.3ms)
+Completed 200 OK in 31ms (Views: 30.7ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.3ms)
+Completed 200 OK in 32ms (Views: 31.7ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by Admin::ChannelsController#index as HTML
+  Rendered admin/channels/index.html.haml within layouts/application (0.3ms)
+Completed 200 OK in 31ms (Views: 30.5ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (2.8ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'vanessa abbott@example.com' LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.3ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.7ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$tgpiU0pycpf05PvX1wMKyOhLVYy6chMvOwL/mgi6Am1/YGArWf8pm"], ["created_at", "2016-06-29 08:12:58.894863"], ["updated_at", "2016-06-29 08:12:58.894863"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:12:58 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (2.8ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (71.3ms)
+  Rendered application/_header.haml (5.4ms)
+  Rendered application/_menu.haml (4.0ms)
+  Rendered application/_login_register_block.haml (2.4ms)
+  Rendered application/_player.haml (8.3ms)
+  Rendered templates/channels/composite_view.haml (1.4ms)
+  Rendered templates/channels/item_view.haml (3.7ms)
+Completed 200 OK in 2190ms (Views: 2173.7ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.4ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$Cowf/M8PSCgXXU6HyM87FeuR0NKSLN16KYzE0NAvjFx09BbYDWHGC"], ["created_at", "2016-06-29 08:13:43.755419"], ["updated_at", "2016-06-29 08:13:43.755419"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:13:43 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (2.6ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (70.8ms)
+  Rendered application/_header.haml (6.1ms)
+  Rendered application/_menu.haml (5.2ms)
+  Rendered application/_login_register_block.haml (2.9ms)
+  Rendered application/_player.haml (9.7ms)
+  Rendered templates/channels/composite_view.haml (1.4ms)
+  Rendered templates/channels/item_view.haml (4.5ms)
+Completed 200 OK in 707ms (Views: 691.1ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.4ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$RrAbDtqTvgva4EBHt/2zo.4Y5VPPR45q/Dz240J02mg4Wvvq6ZBwy"], ["created_at", "2016-06-29 08:13:59.366219"], ["updated_at", "2016-06-29 08:13:59.366219"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:13:59 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (2.7ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (63.7ms)
+  Rendered application/_header.haml (6.4ms)
+  Rendered application/_menu.haml (5.3ms)
+  Rendered application/_login_register_block.haml (3.1ms)
+  Rendered application/_player.haml (10.0ms)
+  Rendered templates/channels/composite_view.haml (1.5ms)
+  Rendered templates/channels/item_view.haml (4.9ms)
+Completed 200 OK in 666ms (Views: 649.4ms | ActiveRecord: 0.0ms)
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:14:00 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"demo@example.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.5ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "demo@example.com"]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.4ms)[0m  [1mUPDATE "listeners" SET "last_sign_in_at" = $1, "current_sign_in_at" = $2, "last_sign_in_ip" = $3, "current_sign_in_ip" = $4, "sign_in_count" = $5, "updated_at" = $6 WHERE "listeners"."id" = $7[0m  [["last_sign_in_at", "2016-06-29 08:14:00.085859"], ["current_sign_in_at", "2016-06-29 08:14:00.085859"], ["last_sign_in_ip", "127.0.0.1/32"], ["current_sign_in_ip", "127.0.0.1/32"], ["sign_in_count", 1], ["updated_at", "2016-06-29 08:14:00.086839"], ["id", 3]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/
+Completed 302 Found in 44ms (ActiveRecord: 1.2ms)
+Started GET "/" for 127.0.0.1 at 2016-06-29 11:14:00 +0300
+Processing by ApplicationController#home as HTML
+  Rendered application/home.haml within layouts/application (0.9ms)
+  [1m[36mListener Load (0.3ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."id" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["id", 3]]
+  Rendered application/_header.haml (1.9ms)
+  Rendered application/_menu.haml (0.2ms)
+  Rendered application/_login_register_block.haml (0.0ms)
+  Rendered application/_player.haml (0.0ms)
+  Rendered templates/channels/composite_view.haml (0.2ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 10ms (Views: 9.6ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.4ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$OpUpnf0.4Q9DYtHI5.NcaeEZCh6qCEYYWkanw/MmtMqmdad5TJj4K"], ["created_at", "2016-06-29 08:14:16.730886"], ["updated_at", "2016-06-29 08:14:16.730886"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:14:16 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (2.8ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (63.7ms)
+  Rendered application/_header.haml (6.3ms)
+  Rendered application/_menu.haml (5.5ms)
+  Rendered application/_login_register_block.haml (3.1ms)
+  Rendered application/_player.haml (10.3ms)
+  Rendered templates/channels/composite_view.haml (1.5ms)
+  Rendered templates/channels/item_view.haml (4.6ms)
+Completed 200 OK in 671ms (Views: 656.4ms | ActiveRecord: 0.0ms)
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:14:17 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"demo@example.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.5ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "demo@example.com"]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.4ms)[0m  [1mUPDATE "listeners" SET "last_sign_in_at" = $1, "current_sign_in_at" = $2, "last_sign_in_ip" = $3, "current_sign_in_ip" = $4, "sign_in_count" = $5, "updated_at" = $6 WHERE "listeners"."id" = $7[0m  [["last_sign_in_at", "2016-06-29 08:14:17.455359"], ["current_sign_in_at", "2016-06-29 08:14:17.455359"], ["last_sign_in_ip", "127.0.0.1/32"], ["current_sign_in_ip", "127.0.0.1/32"], ["sign_in_count", 1], ["updated_at", "2016-06-29 08:14:17.456371"], ["id", 4]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/
+Completed 302 Found in 44ms (ActiveRecord: 1.2ms)
+Started GET "/" for 127.0.0.1 at 2016-06-29 11:14:17 +0300
+Processing by ApplicationController#home as HTML
+  Rendered application/home.haml within layouts/application (1.0ms)
+  [1m[36mListener Load (0.4ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."id" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["id", 4]]
+  Rendered application/_header.haml (2.0ms)
+  Rendered application/_menu.haml (0.2ms)
+  Rendered application/_login_register_block.haml (0.1ms)
+  Rendered application/_player.haml (0.1ms)
+  Rendered templates/channels/composite_view.haml (0.1ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 11ms (Views: 9.7ms | ActiveRecord: 0.4ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.5ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$JtrzPN.5GdhZEZZ7wQZdZe6Iusha0E3nEkR.eiMhJW/ZSSDvJrrai"], ["created_at", "2016-06-29 08:14:30.408317"], ["updated_at", "2016-06-29 08:14:30.408317"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:14:30 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (2.8ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (64.2ms)
+  Rendered application/_header.haml (6.4ms)
+  Rendered application/_menu.haml (5.6ms)
+  Rendered application/_login_register_block.haml (3.1ms)
+  Rendered application/_player.haml (10.4ms)
+  Rendered templates/channels/composite_view.haml (1.6ms)
+  Rendered templates/channels/item_view.haml (4.6ms)
+Completed 200 OK in 661ms (Views: 645.6ms | ActiveRecord: 0.0ms)
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:14:31 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"demo@example.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.5ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "demo@example.com"]]
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.4ms)[0m  [1mUPDATE "listeners" SET "last_sign_in_at" = $1, "current_sign_in_at" = $2, "last_sign_in_ip" = $3, "current_sign_in_ip" = $4, "sign_in_count" = $5, "updated_at" = $6 WHERE "listeners"."id" = $7[0m  [["last_sign_in_at", "2016-06-29 08:14:31.122132"], ["current_sign_in_at", "2016-06-29 08:14:31.122132"], ["last_sign_in_ip", "127.0.0.1/32"], ["current_sign_in_ip", "127.0.0.1/32"], ["sign_in_count", 1], ["updated_at", "2016-06-29 08:14:31.123168"], ["id", 5]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/
+Completed 302 Found in 43ms (ActiveRecord: 1.2ms)
+Started GET "/" for 127.0.0.1 at 2016-06-29 11:14:31 +0300
+Processing by ApplicationController#home as HTML
+  Rendered application/home.haml within layouts/application (0.9ms)
+  [1m[36mListener Load (0.4ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."id" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["id", 5]]
+  Rendered application/_header.haml (1.9ms)
+  Rendered application/_menu.haml (0.2ms)
+  Rendered application/_login_register_block.haml (0.0ms)
+  Rendered application/_player.haml (0.0ms)
+  Rendered templates/channels/composite_view.haml (0.1ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 11ms (Views: 9.6ms | ActiveRecord: 0.4ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:15:32 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (10.9ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (72.3ms)
+  Rendered application/_header.haml (5.1ms)
+  Rendered application/_menu.haml (4.0ms)
+  Rendered application/_login_register_block.haml (2.9ms)
+  Rendered application/_player.haml (7.7ms)
+  Rendered templates/channels/composite_view.haml (1.1ms)
+  Rendered templates/channels/item_view.haml (3.5ms)
+Completed 200 OK in 749ms (Views: 719.0ms | ActiveRecord: 4.5ms)
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.7ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$I6FDO.UGz917bfJw.X7uJ.M/bciET0KFPwM9rnj7T708bvi1cOBVG"], ["created_at", "2016-06-29 08:15:33.389147"], ["updated_at", "2016-06-29 08:15:33.389147"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:15:33 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"demo@example.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.4ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "demo@example.com"]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mUPDATE "listeners" SET "last_sign_in_at" = $1, "current_sign_in_at" = $2, "last_sign_in_ip" = $3, "current_sign_in_ip" = $4, "sign_in_count" = $5, "updated_at" = $6 WHERE "listeners"."id" = $7[0m  [["last_sign_in_at", "2016-06-29 08:15:33.412909"], ["current_sign_in_at", "2016-06-29 08:15:33.412909"], ["last_sign_in_ip", "127.0.0.1/32"], ["current_sign_in_ip", "127.0.0.1/32"], ["sign_in_count", 1], ["updated_at", "2016-06-29 08:15:33.413694"], ["id", 6]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/
+Completed 302 Found in 41ms (ActiveRecord: 1.0ms)
+Started GET "/" for 127.0.0.1 at 2016-06-29 11:15:33 +0300
+Processing by ApplicationController#home as HTML
+  Rendered application/home.haml within layouts/application (0.8ms)
+  [1m[36mListener Load (0.3ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."id" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["id", 6]]
+  Rendered application/_header.haml (1.9ms)
+  Rendered application/_menu.haml (0.2ms)
+  Rendered application/_login_register_block.haml (0.0ms)
+  Rendered application/_player.haml (0.1ms)
+  Rendered templates/channels/composite_view.haml (0.1ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 10ms (Views: 9.0ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:15:53 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (10.9ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (64.7ms)
+  Rendered application/_header.haml (5.1ms)
+  Rendered application/_menu.haml (3.9ms)
+  Rendered application/_login_register_block.haml (2.4ms)
+  Rendered application/_player.haml (7.6ms)
+  Rendered templates/channels/composite_view.haml (1.2ms)
+  Rendered templates/channels/item_view.haml (3.8ms)
+Completed 200 OK in 640ms (Views: 609.1ms | ActiveRecord: 4.6ms)
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.5ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$v0YnwvgUIhRh4WuxgzdVzexNimfjEgXB0pELEU0Z0kUnUiU6fuWxC"], ["created_at", "2016-06-29 08:15:54.088688"], ["updated_at", "2016-06-29 08:15:54.088688"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:15:54 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"demo@example.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.5ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "demo@example.com"]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.4ms)[0m  [1mUPDATE "listeners" SET "last_sign_in_at" = $1, "current_sign_in_at" = $2, "last_sign_in_ip" = $3, "current_sign_in_ip" = $4, "sign_in_count" = $5, "updated_at" = $6 WHERE "listeners"."id" = $7[0m  [["last_sign_in_at", "2016-06-29 08:15:54.112769"], ["current_sign_in_at", "2016-06-29 08:15:54.112769"], ["last_sign_in_ip", "127.0.0.1/32"], ["current_sign_in_ip", "127.0.0.1/32"], ["sign_in_count", 1], ["updated_at", "2016-06-29 08:15:54.113698"], ["id", 7]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/
+Completed 302 Found in 41ms (ActiveRecord: 1.1ms)
+Started GET "/" for 127.0.0.1 at 2016-06-29 11:15:54 +0300
+Processing by ApplicationController#home as HTML
+  Rendered application/home.haml within layouts/application (0.8ms)
+  [1m[36mListener Load (0.3ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."id" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["id", 7]]
+  Rendered application/_header.haml (1.8ms)
+  Rendered application/_menu.haml (0.2ms)
+  Rendered application/_login_register_block.haml (0.0ms)
+  Rendered application/_player.haml (0.0ms)
+  Rendered templates/channels/composite_view.haml (0.1ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 10ms (Views: 9.0ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:16:00 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (10.8ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (63.9ms)
+  Rendered application/_header.haml (5.1ms)
+  Rendered application/_menu.haml (3.9ms)
+  Rendered application/_login_register_block.haml (2.4ms)
+  Rendered application/_player.haml (7.2ms)
+  Rendered templates/channels/composite_view.haml (1.1ms)
+  Rendered templates/channels/item_view.haml (3.6ms)
+Completed 200 OK in 599ms (Views: 569.2ms | ActiveRecord: 4.6ms)
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.5ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$pSvF/JVDAjtu8k.yEFgExOvJgN4EfO5bC6QAh/iJfDSMpgazxSecq"], ["created_at", "2016-06-29 08:16:01.647997"], ["updated_at", "2016-06-29 08:16:01.647997"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:16:01 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"demo@example.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.5ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "demo@example.com"]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mUPDATE "listeners" SET "last_sign_in_at" = $1, "current_sign_in_at" = $2, "last_sign_in_ip" = $3, "current_sign_in_ip" = $4, "sign_in_count" = $5, "updated_at" = $6 WHERE "listeners"."id" = $7[0m  [["last_sign_in_at", "2016-06-29 08:16:01.670689"], ["current_sign_in_at", "2016-06-29 08:16:01.670689"], ["last_sign_in_ip", "127.0.0.1/32"], ["current_sign_in_ip", "127.0.0.1/32"], ["sign_in_count", 1], ["updated_at", "2016-06-29 08:16:01.671512"], ["id", 8]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/
+Completed 302 Found in 39ms (ActiveRecord: 1.0ms)
+Started GET "/" for 127.0.0.1 at 2016-06-29 11:16:01 +0300
+Processing by ApplicationController#home as HTML
+  Rendered application/home.haml within layouts/application (0.8ms)
+  [1m[36mListener Load (0.3ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."id" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["id", 8]]
+  Rendered application/_header.haml (1.8ms)
+  Rendered application/_menu.haml (0.2ms)
+  Rendered application/_login_register_block.haml (0.0ms)
+  Rendered application/_player.haml (0.1ms)
+  Rendered templates/channels/composite_view.haml (0.1ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 10ms (Views: 8.7ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by ChannelsController#index as HTML
+  Parameters: {"page"=>"1"}
+Completed 200 OK in 33ms (Views: 28.6ms | ActiveRecord: 4.1ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:17:51 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (10.7ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (72.3ms)
+  Rendered application/_header.haml (4.7ms)
+  Rendered application/_menu.haml (3.8ms)
+  Rendered application/_login_register_block.haml (2.2ms)
+  Rendered application/_player.haml (7.5ms)
+  Rendered templates/channels/composite_view.haml (1.1ms)
+  Rendered templates/channels/item_view.haml (3.4ms)
+Completed 200 OK in 709ms (Views: 678.9ms | ActiveRecord: 4.3ms)
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.7ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$D9yhiTfX5kyqq7Vr8PvZV.tV2LN5PAX3IBCIfqxbyQjBsxvR1HD9u"], ["created_at", "2016-06-29 08:17:52.152042"], ["updated_at", "2016-06-29 08:17:52.152042"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:17:52 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.4ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "listener.email"]]
+Completed 401 Unauthorized in 7ms (ActiveRecord: 0.4ms)
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/shared/_links.html.haml (0.3ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (4.3ms)
+  Rendered application/_header.haml (0.3ms)
+  Rendered application/_menu.haml (0.2ms)
+  Rendered application/_login_register_block.haml (0.2ms)
+  Rendered application/_player.haml (0.0ms)
+  Rendered templates/channels/composite_view.haml (0.1ms)
+  Rendered templates/channels/item_view.haml (0.1ms)
+Completed 200 OK in 10ms (Views: 7.6ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:21:01 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (10.9ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (72.4ms)
+  Rendered application/_header.haml (5.0ms)
+  Rendered application/_menu.haml (3.9ms)
+  Rendered application/_login_register_block.haml (2.4ms)
+  Rendered application/_player.haml (7.4ms)
+  Rendered templates/channels/composite_view.haml (1.1ms)
+  Rendered templates/channels/item_view.haml (3.5ms)
+Completed 200 OK in 718ms (Views: 687.4ms | ActiveRecord: 4.4ms)
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.7ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$e/hDz9BJITkh9jdelQTrEu/WgjsQZyXMKomcGKuryzr7R4oFqZKPq"], ["created_at", "2016-06-29 08:21:01.868066"], ["updated_at", "2016-06-29 08:21:01.868066"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:21:01 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.4ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "listener.email"]]
+Completed 401 Unauthorized in 7ms (ActiveRecord: 0.4ms)
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/shared/_links.html.haml (0.3ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (4.4ms)
+  Rendered application/_header.haml (0.3ms)
+  Rendered application/_menu.haml (0.1ms)
+  Rendered application/_login_register_block.haml (0.2ms)
+  Rendered application/_player.haml (0.0ms)
+  Rendered templates/channels/composite_view.haml (0.2ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 10ms (Views: 7.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:24:23 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (11.1ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (71.6ms)
+  Rendered application/_header.haml (5.1ms)
+  Rendered application/_menu.haml (3.9ms)
+  Rendered application/_login_register_block.haml (2.3ms)
+  Rendered application/_player.haml (7.7ms)
+  Rendered templates/channels/composite_view.haml (1.2ms)
+  Rendered templates/channels/item_view.haml (3.5ms)
+Completed 200 OK in 720ms (Views: 689.9ms | ActiveRecord: 4.4ms)
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.5ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$AbJ2nuv7BG/kXlpV9aS7F.7lwjqYgQkso1qihBLbacQc4Mbq2sGpm"], ["created_at", "2016-06-29 08:24:24.073967"], ["updated_at", "2016-06-29 08:24:24.073967"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:24:24 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.4ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "listener.email"]]
+Completed 401 Unauthorized in 7ms (ActiveRecord: 0.4ms)
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/shared/_links.html.haml (0.3ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (4.6ms)
+  Rendered application/_header.haml (0.4ms)
+  Rendered application/_menu.haml (0.1ms)
+  Rendered application/_login_register_block.haml (0.2ms)
+  Rendered application/_player.haml (0.0ms)
+  Rendered templates/channels/composite_view.haml (0.1ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 10ms (Views: 8.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:24:38 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (10.9ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (71.1ms)
+  Rendered application/_header.haml (5.4ms)
+  Rendered application/_menu.haml (4.2ms)
+  Rendered application/_login_register_block.haml (2.6ms)
+  Rendered application/_player.haml (7.8ms)
+  Rendered templates/channels/composite_view.haml (1.3ms)
+  Rendered templates/channels/item_view.haml (3.8ms)
+Completed 200 OK in 710ms (Views: 679.3ms | ActiveRecord: 4.5ms)
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.5ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$n90RVGGcAhrlbXY8m/2ilu.FLG2Ynyc1aNhyf4KF206l8bqcEqRPi"], ["created_at", "2016-06-29 08:24:39.597683"], ["updated_at", "2016-06-29 08:24:39.597683"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:24:39 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.5ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "listener.email"]]
+Completed 401 Unauthorized in 7ms (ActiveRecord: 0.5ms)
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/shared/_links.html.haml (0.3ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (4.5ms)
+  Rendered application/_header.haml (0.3ms)
+  Rendered application/_menu.haml (0.2ms)
+  Rendered application/_login_register_block.haml (0.2ms)
+  Rendered application/_player.haml (0.0ms)
+  Rendered templates/channels/composite_view.haml (0.1ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 10ms (Views: 7.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:28:02 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (11.0ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (71.4ms)
+  Rendered application/_header.haml (4.7ms)
+  Rendered application/_menu.haml (3.8ms)
+  Rendered application/_login_register_block.haml (2.2ms)
+  Rendered application/_player.haml (7.4ms)
+  Rendered templates/channels/composite_view.haml (1.2ms)
+  Rendered templates/channels/item_view.haml (3.5ms)
+Completed 200 OK in 712ms (Views: 682.1ms | ActiveRecord: 4.3ms)
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.7ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$I6j662r0Mz6H12D6ROZlNuf/AqPzj27iFg.VIe38CsTtjjfuQihwi"], ["created_at", "2016-06-29 08:28:03.273487"], ["updated_at", "2016-06-29 08:28:03.273487"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:28:03 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.4ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "listener.email"]]
+Completed 401 Unauthorized in 7ms (ActiveRecord: 0.4ms)
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/shared/_links.html.haml (0.3ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (4.4ms)
+  Rendered application/_header.haml (0.3ms)
+  Rendered application/_menu.haml (0.2ms)
+  Rendered application/_login_register_block.haml (0.2ms)
+  Rendered application/_player.haml (0.1ms)
+  Rendered templates/channels/composite_view.haml (0.1ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 10ms (Views: 7.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:28:12 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (10.7ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (64.2ms)
+Completed 500 Internal Server Error in 125ms (ActiveRecord: 4.5ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:28:21 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.haml (10.7ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (63.2ms)
+  Rendered application/_header.haml (5.0ms)
+  Rendered application/_menu.haml (4.0ms)
+  Rendered application/_login_register_block.haml (2.2ms)
+  Rendered application/_player.haml (7.6ms)
+  Rendered templates/channels/composite_view.haml (1.1ms)
+  Rendered templates/channels/item_view.haml (3.6ms)
+Completed 200 OK in 698ms (Views: 668.4ms | ActiveRecord: 4.5ms)
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mListener Exists (1.5ms)[0m  SELECT  1 AS one FROM "listeners" WHERE "listeners"."email" = 'demo@example.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "listeners" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "demo@example.com"], ["encrypted_password", "$2a$04$6.P39JU7s9IPmxoBX0WiJudTIpND35VoXkERjMh4hR8VJeRg84fb6"], ["created_at", "2016-06-29 08:28:21.996191"], ["updated_at", "2016-06-29 08:28:21.996191"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started POST "/listeners/sign_in" for 127.0.0.1 at 2016-06-29 11:28:22 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mListener Load (0.4ms)[0m  [1mSELECT  "listeners".* FROM "listeners" WHERE "listeners"."email" = $1  ORDER BY "listeners"."id" ASC LIMIT 1[0m  [["email", "listener.email"]]
+Completed 401 Unauthorized in 7ms (ActiveRecord: 0.4ms)
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "listener"=>{"email"=>"listener.email", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered devise/shared/_links.html.haml (0.3ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (4.8ms)
+  Rendered application/_header.haml (0.3ms)
+  Rendered application/_menu.haml (0.1ms)
+  Rendered application/_login_register_block.haml (0.2ms)
+  Rendered application/_player.haml (0.0ms)
+  Rendered templates/channels/composite_view.haml (0.1ms)
+  Rendered templates/channels/item_view.haml (0.2ms)
+Completed 200 OK in 10ms (Views: 8.2ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Processing by ChannelsController#index as HTML
+  Parameters: {"page"=>"1"}
+Completed 200 OK in 32ms (Views: 28.1ms | ActiveRecord: 4.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m

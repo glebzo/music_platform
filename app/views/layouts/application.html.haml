@@ -2,7 +2,7 @@
 %html.app{:lang => "en-US"}
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title MusicPlatform
+    %title MusicPlatform | v1
 
     = csrf_meta_tags
     = stylesheet_link_tag 'application'
@@ -18,21 +18,23 @@
           "data-toggle" => "class:nav-off-screen,open",
           :href => "javascript:;"}
 
-          %section.vbox{"data-turbolinks-permanent" => ""}
+          %section.vbox
             %section.w-f-md
               %section.hbox.stretch
                 // aside block
                 %section
                   %section.vbox
-                    %section.scrollable.wrapper-lg
-                      = render 'login_register_block'
+                    %section.scrollable.wrapper-lg{'data-pjax-container': ''}
+                      -#= render 'login_register_block'
+                      - flash.each do |name, msg|
+                        = content_tag :div, msg, class: "alert alert-info"
                       = yield
 
             = render partial: 'player'
 
 
-#scripts{"data-turbolinks-permanent" => ""}
-  = javascript_include_tag 'application'
+  = render :template => 'templates/channels/composite_view'
+  = render :template => 'templates/channels/item_view'
 
-= render :template => 'templates/channels/composite_view'
-= render :template => 'templates/channels/item_view'
+
+  = javascript_include_tag 'application'

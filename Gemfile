@@ -7,13 +7,13 @@ gem 'puma', '~> 2.15'
 gem 'rails', '4.2.6'
 gem 'pg', '~> 0.15'
 
-gem 'turbolinks'
+gem 'pjax_rails', '~> 0.4.0'
+# gem 'jquery-turbolinks'
 gem 'coffee-rails'
 gem 'backbone-on-rails'
 
 gem 'jquery-rails'
-# gem 'sass-rails', '~> 5.0'
-# gem 'uglifier', '>= 1.3.0'
+
 
 gem 'haml-rails'
 gem 'twitter-bootstrap-rails'
