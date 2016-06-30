@@ -11,11 +11,11 @@ Rails.application.routes.draw do
 
   scope 'api/' do
     scope 'v1/' do
-      resources :channels, only: [:index, :show]
-      resources :soundtracks, only: [:index]
+      resources :channels, only: [:index, :show] do
+        resources :soundtracks, only: [:index]
+      end
     end
   end
-
 
 end
 
