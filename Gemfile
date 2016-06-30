@@ -7,28 +7,30 @@ gem 'puma', '~> 2.15'
 gem 'rails', '4.2.6'
 gem 'pg', '~> 0.15'
 
-gem 'pjax_rails', '~> 0.4.0'
-# gem 'jquery-turbolinks'
-gem 'coffee-rails'
-gem 'backbone-on-rails'
-
+# Javascript frontend
 gem 'jquery-rails'
+gem 'pjax_rails', '~> 0.4.0'
+gem 'backbone-on-rails'
+# gem 'jquery-turbolinks'
 
-
+# Simplify Syntax
 gem 'haml-rails'
-gem 'twitter-bootstrap-rails'
+gem 'coffee-rails'
 gem 'simple_form'
+
+# Frontend assets
+gem 'twitter-bootstrap-rails'
 gem 'simple-line-icons-rails'
 gem 'font-awesome-rails'
-# gem 'soundcloud'
 
 # Authentication & Authorization
 gem 'devise'
 # gem 'cancancan'
 
-# Soundtracks
+# Soundtracks & Channels
 gem 'kaminari'
 gem "paperclip", "~> 5.0.0.beta1"
+# gem 'soundcloud'
 
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
