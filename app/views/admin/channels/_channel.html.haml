@@ -1,5 +1,7 @@
 %tr
   %td
+    = image_tag channel.image.url(:tiny)
+  %td
     = link_to channel.name, admin_channel_path(channel)
   %td
     = link_to channel.albums_count
