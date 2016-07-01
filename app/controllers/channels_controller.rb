@@ -1,9 +1,9 @@
 class ChannelsController < ApplicationController
   before_action :get_channel, only: [:show]
 
+  respond_to :json
   def index
     @channels = Channel.page(params[:page])
-    render json: @channels
   end
 
   def show
