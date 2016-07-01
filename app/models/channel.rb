@@ -1,5 +1,5 @@
 class Channel < ActiveRecord::Base
-  has_attached_file :image, styles: { medium: "256x256>", thumb: "150x150>" }, default_url: 'channels/defaults/img150.jpg'
+  has_attached_file :image, styles: { tiny: '60x60', medium: "256x256>", thumb: "150x150>" }, default_url: 'channels/defaults/img150.jpg'
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   validates_presence_of :name
   validates_presence_of :image
