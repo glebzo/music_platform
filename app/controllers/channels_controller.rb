@@ -10,10 +10,6 @@ class ChannelsController < ApplicationController
     render json: @channel
   end
 
-  def favorites
-
-  end
-
   private
 
   def get_channel

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  api_version(:module => "V1", :parameter => {:name => "version", :value => "1"}) do
+  end
   devise_for :listeners
   root 'application#home'
 
@@ -9,13 +11,10 @@ Rails.application.routes.draw do
     end
   end
 
-  scope 'api/' do
-    scope 'v1/' do
-      resources :channels, only: [:index, :show] do
-        resources :soundtracks, only: [:index]
-      end
+  api_version(module: "V1", :header => { :name => "API-VERSION", :value => "v1" }, :defaults => {:format => :json}, default: true) do
+    resources :channels, only: [:index, :show], defaults: { format: :json } do
+      resources :soundtracks, only: [:index]
     end
   end
-
 end
 

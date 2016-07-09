@@ -30,6 +30,7 @@ gem 'devise'
 # Soundtracks & Channels
 gem 'kaminari'
 gem "paperclip", "~> 5.0.0.beta1"
+gem 'versionist'
 # gem 'soundcloud'
 
 gem 'jbuilder', '~> 2.0'

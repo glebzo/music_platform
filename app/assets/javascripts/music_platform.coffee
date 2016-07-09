@@ -8,7 +8,6 @@ MusicPlatform.Routes ||= {}
 
 MusicPlatform.on 'before:start', ->
   LoadDependencies()
-
 MusicPlatform.on 'start', ->
   MusicPlatform.ReloadRegionContainer()
   MusicPlatform.fetchAndRenderChannels()
@@ -16,11 +15,6 @@ MusicPlatform.on 'start', ->
 jQuery ->
   $(document).pjax 'a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '[data-pjax-container]'
   MusicPlatform.start()
-
-
-
-
-
 
 
 #  Helpers
