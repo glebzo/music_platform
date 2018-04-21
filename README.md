@@ -1,10 +1,9 @@
-# MusicPlatform [Under Development]
+# MusicPlatform
 Rails-based Music Streaming Platform
 
 **MusicPlatform** is a flexible solution to run your own music streaming.
 
 ###Key Features
-
 * Soundtracks Listing & Search by: Artists, Albums, Names, Channels
 * Admin Dashboard & Statistics
 * Music Channels
@@ -16,7 +15,6 @@ Rails-based Music Streaming Platform
 
 Future Support
 * AAC & MP3 Live Streaming
-
 ###Getting Started
 ----------------------
 Requirements:
